@@ -56,7 +56,7 @@ def create_playlist()
 
   all_songs = [song1, song2, song3, song4, song5, song6, song7, song8, song9, song10]
 
-  @playlist = all_songs.shuffle[0..5]
+  @playlist = all_songs.shuffle[0..4]
 end
 
 def get_playlist_as_string()
@@ -72,31 +72,32 @@ def guest_opinions_on_music()
   for each_guest in @guests
     case each_guest.favourite_song.genre
     when :goth
-      if @number_of_goth_songs >= 2
-        opinion = each_guest.name + ": " + each_guest.opinion(:happy)
+      if @number_of_goth_songs >= 1
+        opinion = each_guest.opinion(:happy)
       else
-        opinion = each_guest.name + ": " + each_guest.opinion(:sad)
+        opinion = each_guest.opinion(:sad)
       end
     when :hippy
-      if @number_of_hippy_songs >= 2
-        opinion = each_guest.name + ": " + each_guest.opinion(:happy)
+      if @number_of_hippy_songs >= 1
+        opinion = each_guest.opinion(:happy)
       else
-        opinion = each_guest.name + ": " + each_guest.opinion(:sad)
+        opinion = each_guest.opinion(:sad)
       end
     when :pop
-      if @number_of_pop_songs >= 2
-        opinion = each_guest.name + ": " + each_guest.opinion(:happy)
+      if @number_of_pop_songs >= 1
+        opinion = each_guest.opinion(:happy)
       else
-        opinion = each_guest.name + ": " + each_guest.opinion(:sad)
+        opinion = each_guest.opinion(:sad)
       end
     when :patriotic
       if @number_of_patriotic_songs >= 1
-        opinion = each_guest.name + ": " + each_guest.opinion(:happy)
+        opinion = each_guest.opinion(:happy)
       else
-        opinion = each_guest.name + ": " + each_guest.opinion(:sad)
+        opinion = each_guest.opinion(:sad)
       end
   end
-  guest_opinions += opinion +"\n"
+  opinion.upcase! if playlist_contains_favourite_song?(each_guest)
+  guest_opinions += each_guest.name + ": " + opinion +"\n"
 end
 return guest_opinions
 end
@@ -121,9 +122,13 @@ def find_amount_of_each_genre_in_playlist()
   end
 end
 
-
-
-
+def playlist_contains_favourite_song?(guest)
+  array_of_song_titles = []
+  for each_song in @playlist
+    array_of_song_titles << each_song.name
+  end
+  return array_of_song_titles.include?(guest.favourite_song.name)
+end
 
 
 end

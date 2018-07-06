@@ -54,7 +54,7 @@ class TestRoom < MiniTest::Test
 
   def test_return_a_playlist_of_correct_length
     actual = @room.playlist.length
-    assert_equal(6, actual)
+    assert_equal(5, actual)
   end
 
   def test_check_out_guest__returns_false
@@ -67,14 +67,6 @@ class TestRoom < MiniTest::Test
     @room.check_in_guest?(@guest5)
     actual = @room.check_out_guest?("Jeremy")
     assert_equal(true, actual)
-  end
-
-  def test_opinions_on_music
-    @room.check_in_guest?(@guest1)
-    @room.check_in_guest?(@guest2)
-    @room.check_in_guest?(@guest4)
-
-    p @room.guest_opinions_on_music()
   end
 
 
